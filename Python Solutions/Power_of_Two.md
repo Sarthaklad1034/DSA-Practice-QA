@@ -1,14 +1,14 @@
 <div align="center">
 
 <h1>Power of Two</h1>
-
+ 
 </div>
 
 ---
 
 ## 📝 Problem Statement
 
-Given an integer `n`, return `True` if it is a power of two. Otherwise, return `False`. 
+Given an integer `n`, return `true` if it is a power of two. Otherwise, return `false`. 
 
 An integer `n` is a power of two if there exists an integer `x` such that `n = 2^x`.
 
@@ -24,19 +24,19 @@ An integer `n` is a power of two if there exists an integer `x` such that `n = 2
 <tr>
 <td><strong>1</strong></td>
 <td><code>n = 1</code></td>
-<td><code>True</code></td>
+<td><code>true</code></td>
 <td><code>2^0 = 1</code></td>
 </tr>
 <tr>
 <td><strong>2</strong></td>
 <td><code>n = 16</code></td>
-<td><code>True</code></td>
+<td><code>true</code></td>
 <td><code>2^4 = 16</code></td>
 </tr>
 <tr>
 <td><strong>3</strong></td>
 <td><code>n = 3</code></td>
-<td><code>False</code></td>
+<td><code>false</code></td>
 <td>Cannot be expressed as <code>2^x</code></td>
 </tr>
 </table>
@@ -53,23 +53,27 @@ An integer `n` is a power of two if there exists an integer `x` such that `n = 2
 
 ### Approach 1: Iterative Division
 
-This approach checks if the given integer `n` can be continuously divided by 2 until it becomes 1. If at any point `n` is not divisible by 2, it means `n` is not a power of two.
+The approach involves checking if the given integer `n` can be continuously divided by 2 until it becomes 1. If at any point `n` is not divisible by 2, it means `n` is not a power of two.
 
-```python
-class Solution(object):
-    def isPowerOfTwo(self, n):
-        if n == 0:
-            return False
-        while n % 2 == 0:
-            n /= 2
-        return n == 1
+```java
+class Solution {
+    public boolean isPowerOfTwo(int n) {
+        if (n <= 0) return false;
+        
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+        
+        return n == 1;
+    }
+}
 ```
 
 #### 📊 Algorithm Steps
 
-1. **Initial Check**: If `n` is 0, return `False`
-2. **Loop**: While `n` is divisible by 2, divide `n` by 2
-3. **Final Check**: If the result is 1, return `True`, else `False`
+1. **Initial Check**: If `n` is less than or equal to 0, return `false`
+2. **Division Loop**: While `n` is divisible by 2, divide `n` by 2
+3. **Final Check**: If the result is 1, then `n` was a power of two
 
 <div align="center">
 
@@ -81,12 +85,14 @@ class Solution(object):
 
 ### Approach 2: Bit Manipulation (Optimal)
 
-A power of two has exactly one bit set in binary. So, `n & (n-1) == 0` only for powers of two.
+A power of two in binary representation has exactly one bit set to 1. We can use the property that `n & (n-1)` equals 0 for powers of two.
 
-```python
-class Solution(object):
-    def isPowerOfTwo(self, n):
-        return n > 0 and (n & (n - 1)) == 0
+```java
+class Solution {
+    public boolean isPowerOfTwo(int n) {
+        return n > 0 && (n & (n - 1)) == 0;
+    }
+}
 ```
 
 #### 🔢 Binary Analysis
@@ -132,9 +138,9 @@ class Solution(object):
 #### 💡 Key Insight
 
 For any power of two `n`:
-- It has only one set bit
-- `n-1` flips all lower bits
-- `n & (n-1)` becomes 0
+- `n` has exactly one bit set to 1
+- `n-1` has all bits set to 1 up to the position where `n` has its single 1 bit
+- `n & (n-1)` results in 0
 
 <div align="center">
 
@@ -148,23 +154,27 @@ For any power of two `n`:
 
 | Approach | Time | Space | Pros | Cons |
 |----------|------|-------|------|------|
-| **Iterative** | O(log n) | O(1) | Simple logic | Slower |
-| **Bit Manipulation** | O(1) | O(1) | Efficient and clean | Bitwise logic might be tricky |
+| **Iterative** | O(log n) | O(1) | Easy to understand | Slower for large numbers |
+| **Bit Manipulation** | O(1) | O(1) | Constant time, elegant | Requires bit manipulation knowledge |
 
 ---
 
 ## 🧪 Test Cases
 
-```python
-def test():
-    s = Solution()
-    print(s.isPowerOfTwo(1))    # True
-    print(s.isPowerOfTwo(16))   # True  
-    print(s.isPowerOfTwo(3))    # False
-    print(s.isPowerOfTwo(0))    # False
-    print(s.isPowerOfTwo(-16))  # False
-
-test()
+```java
+// Test the solution
+public class TestPowerOfTwo {
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        
+        // Test cases
+        System.out.println(solution.isPowerOfTwo(1));    // true
+        System.out.println(solution.isPowerOfTwo(16));   // true  
+        System.out.println(solution.isPowerOfTwo(3));    // false
+        System.out.println(solution.isPowerOfTwo(0));    // false
+        System.out.println(solution.isPowerOfTwo(-16));  // false
+    }
+}
 ```
 
 ---

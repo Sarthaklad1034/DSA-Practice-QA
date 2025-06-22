@@ -1,3 +1,4 @@
+
 <div align="center">
 
 <h1>Fibonacci Number</h1>
@@ -60,22 +61,24 @@ Given an integer `n`, calculate `F(n)`.
 
 ## 🛠️ Solution Approaches
 
-### Approach 1: Iterative Dynamic Programming
+### Approach 1: Iterative Dynamic Programming (Java)
 
 Use two variables to store the last two Fibonacci numbers and update them iteratively.
 
-```python
-class Solution(object):
-    def fib(self, n):
-        if n == 0 or n == 1:
-            return n
-        first = 0
-        second = 1
-        for i in range(1, n + 1):
-            third = first + second
-            first = second
-            second = third
-        return first
+```java
+class Solution {
+    public int fib(int n) {
+        if (n == 0 || n == 1) return n;
+        int first = 0;
+        int second = 1;
+        for (int i = 1; i <= n; i++) {
+            int third = first + second;
+            first = second;
+            second = third;
+        }
+        return first;
+    }
+}
 ```
 
 <div align="center">
@@ -86,66 +89,66 @@ class Solution(object):
 
 ---
 
-### Approach 2: Top-Down with Memoization (Optimized)
+### 💡 Explanation
 
-This recursive solution uses memoization to store already computed values and avoids recomputation.
+- We use two variables `first` and `second` to hold the last two values in the Fibonacci sequence.
+- The loop iterates from `1` to `n`, updating these two values each time.
+- We return the variable `first`, which holds the `n-th` Fibonacci number at the end.
 
-```python
-class Solution(object):
-    def fib(self, n):
-        memo = {}
-        def helper(x):
-            if x in memo:
-                return memo[x]
-            if x == 0 or x == 1:
-                return x
-            memo[x] = helper(x - 1) + helper(x - 2)
-            return memo[x]
-        return helper(n)
+---
+
+### 🚀 Follow-Up: Optimal Approach
+
+The most optimal way in terms of time and space is to use Binet’s Formula (closed-form expression), though due to floating point precision it may not always be accurate for large `n`.
+
+```java
+class Solution {
+    public int fib(int n) {
+        double phi = (1 + Math.sqrt(5)) / 2;
+        return (int)Math.round(Math.pow(phi, n) / Math.sqrt(5));
+    }
+}
 ```
-
-### 🔍 Explanation
-
-- Stores the result of each Fibonacci call to avoid redundant calculations.
-- Reduces exponential time of naive recursion to linear time.
 
 <div align="center">
 
-**Time Complexity:** `O(n)` | **Space Complexity:** `O(n)` (due to recursion stack + memo dictionary)
+**Time Complexity:** `O(1)` | **Space Complexity:** `O(1)`
 
 </div>
 
 ---
 
-## 🏆 Comparison
+## 🏆 Comparison of Approaches
 
-| Approach                    | Time       | Space | Pros                            | Cons                    |
-|-----------------------------|------------|-------|---------------------------------|-------------------------|
-| **Iterative DP**            | `O(n)`     | `O(1)`| Simple, efficient                | None                    |
-| **Top-Down Memoization**    | `O(n)`     | `O(n)`| Cleaner recursion, avoids loops | Uses more memory stack  |
+| Approach                       | Time       | Space      | Pros                                  | Cons                                 |
+|-------------------------------|------------|------------|---------------------------------------|--------------------------------------|
+| Iterative DP                  | `O(n)`     | `O(1)`     | Simple and efficient                  | Not the fastest for `n=30` or more   |
+| Recursive Memoization (Python)| `O(n)`     | `O(n)`     | Clean recursion, avoids recomputation | Uses stack memory                    |
+| Binet’s Formula (Java)        | `O(1)`     | `O(1)`     | Fastest solution                      | Might have precision issues          |
 
 ---
 
-## 🧪 Test Cases
+## 🧪 Test Cases (Java)
 
-```python
-def test():
-    s = Solution()
-    print(s.fib(0))   # 0
-    print(s.fib(1))   # 1
-    print(s.fib(2))   # 1
-    print(s.fib(3))   # 2
-    print(s.fib(4))   # 3
-    print(s.fib(10))  # 55
-
-test()
+```java
+public class TestFibonacci {
+    public static void main(String[] args) {
+        Solution s = new Solution();
+        System.out.println(s.fib(0));   // 0
+        System.out.println(s.fib(1));   // 1
+        System.out.println(s.fib(2));   // 1
+        System.out.println(s.fib(3));   // 2
+        System.out.println(s.fib(4));   // 3
+        System.out.println(s.fib(10));  // 55
+    }
+}
 ```
 
 ---
 
 <div align="center">
 
-`Math` • `Dynamic Programming` • `Memoization` • `Recursion` • `Easy`
+`Math` • `Dynamic Programming` • `Memoization` • `Recursion` • `Closed-form Formula`
 
 ---
 

@@ -1,7 +1,7 @@
 
 <div align="center">
 
-<h1>Power of Four (Python)</h1>
+<h1>Power of Four</h1>
 
 </div>
 
@@ -9,7 +9,7 @@
 
 ## 📝 Problem Statement
 
-Given an integer `n`, return `True` if it is a power of four. Otherwise, return `False`.  
+Given an integer `n`, return `true` if it is a power of four. Otherwise, return `false`.  
 
 An integer `n` is a power of four if there exists an integer `x` such that:  
 `n = 4^x`
@@ -18,11 +18,32 @@ An integer `n` is a power of four if there exists an integer `x` such that:
 
 ## 🔍 Examples
 
-| Example | Input      | Output | Explanation        |
-|---------|------------|--------|--------------------|
-| 1       | `n = 16`   | `True` | `4^2 = 16`         |
-| 2       | `n = 5`    | `False`| Not a power of 4   |
-| 3       | `n = 1`    | `True` | `4^0 = 1`          |
+<table>
+<tr>
+<th>Example</th>
+<th>Input</th>
+<th>Output</th>
+<th>Explanation</th>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td><code>n = 16</code></td>
+<td><code>true</code></td>
+<td><code>4^2 = 16</code></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><code>n = 5</code></td>
+<td><code>false</code></td>
+<td>Cannot be expressed as <code>4^x</code></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><code>n = 1</code></td>
+<td><code>true</code></td>
+<td><code>4^0 = 1</code></td>
+</tr>
+</table>
 
 ---
 
@@ -36,25 +57,29 @@ An integer `n` is a power of four if there exists an integer `x` such that:
 
 ## 🛠️ Solution Approaches
 
-### ✅ Approach 1: Iterative Division (Given)
+### Approach 1: Iterative Division
 
-```python
-class Solution(object):
-    def isPowerOfFour(self, n):
-        if n < 1:
-            return False
-        while n > 1:
-            if n % 4 != 0:
-                return False
-            n /= 4
-        return n == 1
+Check if the number is divisible by 4 until it becomes 1. If not divisible at any step, return false.
+
+```java
+class Solution {
+    public boolean isPowerOfFour(int n) {
+        if (n < 1) return false;
+
+        while (n % 4 == 0) {
+            n /= 4;
+        }
+
+        return n == 1;
+    }
+}
 ```
 
 #### 📊 Algorithm Steps
 
-1. If `n < 1`, return `False`
+1. If `n < 1`, return `false`
 2. While `n` is divisible by 4, divide it by 4
-3. Return `True` if `n` becomes 1
+3. Return `true` if `n` becomes 1
 
 <div align="center">
 
@@ -64,22 +89,24 @@ class Solution(object):
 
 ---
 
-### 🔁 Approach 2: Bit Manipulation (Follow-up)
+### Approach 2: Without Loops / Recursion (Bit Manipulation)
 
-Check two things:
+Check if:
 - `n` is a power of two (only one bit set)
-- The 1-bit is in an even position (characteristic of power of 4)
+- AND that bit is at the **even position** (power of 4)
 
-```python
-class Solution(object):
-    def isPowerOfFour(self, n):
-        return n > 0 and (n & (n - 1)) == 0 and (n & 0xAAAAAAAA) == 0
+```java
+class Solution {
+    public boolean isPowerOfFour(int n) {
+        return n > 0 && (n & (n - 1)) == 0 && (n & 0xAAAAAAAA) == 0;
+    }
+}
 ```
 
-#### 🔢 Explanation
+#### 🔢 Key Insight
 
-- `(n & (n - 1)) == 0`: Ensures only one bit is set (power of 2)
-- `0xAAAAAAAA`: Mask with 1s at odd positions to exclude powers of 2 that aren't also powers of 4
+- `(n & (n - 1)) == 0` checks if it's a power of 2
+- `(n & 0xAAAAAAAA) == 0` ensures the 1-bit is in an **even position**
 
 <div align="center">
 
@@ -89,22 +116,35 @@ class Solution(object):
 
 ---
 
+## 🏆 Comparison
+
+| Approach              | Time     | Space   | Pros                          | Cons                           |
+|-----------------------|----------|---------|-------------------------------|--------------------------------|
+| Iterative Division    | O(log n) | O(1)    | Easy to implement             | Slower, uses loop             |
+| Bit Manipulation      | O(1)     | O(1)    | Fast and loop-free            | Less intuitive                |
+
+---
+
 ## 🧪 Test Cases
 
-```python
-sol = Solution()
-print(sol.isPowerOfFour(16))  # True
-print(sol.isPowerOfFour(5))   # False
-print(sol.isPowerOfFour(1))   # True
-print(sol.isPowerOfFour(0))   # False
-print(sol.isPowerOfFour(64))  # True
+```java
+public class TestPowerOfFour {
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.isPowerOfFour(16));  // true
+        System.out.println(sol.isPowerOfFour(5));   // false
+        System.out.println(sol.isPowerOfFour(1));   // true
+        System.out.println(sol.isPowerOfFour(0));   // false
+        System.out.println(sol.isPowerOfFour(64));  // true
+    }
+}
 ```
 
 ---
 
 <div align="center">
 
-<code>Math</code> • <code>Bit Manipulation</code> • <code>Loop</code> • <code>Recursion</code> • <code>Python</code>
+<code>Math</code> • <code>Bit Manipulation</code> • <code>Loop</code> • <code>Recursion</code> • <code>Easy</code>
 
 ---
 

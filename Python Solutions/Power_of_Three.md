@@ -1,3 +1,4 @@
+
 <div align="center">
 
 <h1>Power of Three</h1>
@@ -8,7 +9,7 @@
 
 ## 📝 Problem Statement
 
-Given an integer `n`, return `True` if it is a power of three. Otherwise, return `False`.  
+Given an integer `n`, return `true` if it is a power of three. Otherwise, return `false`.  
 
 An integer `n` is a power of three if there exists an integer `x` such that:  
 `n = 3^x`
@@ -27,19 +28,19 @@ An integer `n` is a power of three if there exists an integer `x` such that:
 <tr>
 <td><strong>1</strong></td>
 <td><code>n = 27</code></td>
-<td><code>True</code></td>
+<td><code>true</code></td>
 <td><code>3^3 = 27</code></td>
 </tr>
 <tr>
 <td><strong>2</strong></td>
 <td><code>n = 0</code></td>
-<td><code>False</code></td>
+<td><code>false</code></td>
 <td>No power of 3 is 0</td>
 </tr>
 <tr>
 <td><strong>3</strong></td>
 <td><code>n = -1</code></td>
-<td><code>False</code></td>
+<td><code>false</code></td>
 <td>Negative numbers can't be powers of 3</td>
 </tr>
 </table>
@@ -58,26 +59,27 @@ An integer `n` is a power of three if there exists an integer `x` such that:
 
 ### Approach 1: Iterative Division
 
-Repeatedly divide the number by 3. If at any step the number is not divisible by 3, return `False`.
+Check if the number is divisible by 3 until it becomes 1. If not divisible at any step, return false.
 
-```python
-class Solution(object):
-    def isPowerOfThree(self, n):
-        if n < 1:
-            return False
-        while n > 1:
-            if n % 3 != 0:
-                return False
-            n /= 3
-        return n == 1
+```java
+class Solution {
+    public boolean isPowerOfThree(int n) {
+        if (n < 1) return false;
+
+        while (n % 3 == 0) {
+            n /= 3;
+        }
+
+        return n == 1;
+    }
+}
 ```
 
 #### 📊 Algorithm Steps
 
-1. If `n < 1`, return `False`
-2. While `n > 1`, check if divisible by 3
-3. If not divisible, return `False`; otherwise, divide it by 3
-4. At the end, check if `n` equals 1
+1. If `n < 1`, return `false`
+2. While `n` is divisible by 3, divide it by 3
+3. Return `true` if `n` becomes 1
 
 <div align="center">
 
@@ -87,21 +89,22 @@ class Solution(object):
 
 ---
 
-### Approach 2: Math-based Optimization (No Loops or Recursion)
+### Approach 2: Without Loops / Recursion (Math-Based)
 
-Find the largest power of 3 within 32-bit integer range: `3^19 = 1162261467`.  
-If `n` divides this exactly, then it's a power of 3.
+Find the **maximum power of 3** that fits in a 32-bit signed integer, which is `3^19 = 1162261467`.  
+If `n` is a power of 3, it must divide this number exactly.
 
-```python
-class Solution(object):
-    def isPowerOfThree(self, n):
-        return n > 0 and 1162261467 % n == 0
+```java
+class Solution {
+    public boolean isPowerOfThree(int n) {
+        return n > 0 && 1162261467 % n == 0;
+    }
+}
 ```
 
 #### 🔢 Key Insight
 
-- 1162261467 is the largest power of 3 within 32-bit signed integer.
-- All lower powers of 3 divide it exactly.
+If `n` is a power of 3, then `1162261467 % n == 0` because 3^19 is the largest power of 3 within 32-bit range.
 
 <div align="center">
 
@@ -115,23 +118,24 @@ class Solution(object):
 
 | Approach              | Time     | Space   | Pros                          | Cons                           |
 |-----------------------|----------|---------|-------------------------------|--------------------------------|
-| Iterative Division    | O(log n) | O(1)    | Simple and readable           | Slightly slower                |
-| No Loops (Math)       | O(1)     | O(1)    | Fast and efficient            | Requires known constant        |
+| Iterative Division    | O(log n) | O(1)    | Simple and readable           | Slightly slower than constant |
+| No Loops (Math)       | O(1)     | O(1)    | Fastest approach              | May seem like a trick solution |
 
 ---
 
 ## 🧪 Test Cases
 
-```python
-def test():
-    s = Solution()
-    print(s.isPowerOfThree(27))   # True
-    print(s.isPowerOfThree(0))    # False
-    print(s.isPowerOfThree(-1))   # False
-    print(s.isPowerOfThree(1))    # True
-    print(s.isPowerOfThree(9))    # True
-
-test()
+```java
+public class TestPowerOfThree {
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.isPowerOfThree(27));  // true
+        System.out.println(sol.isPowerOfThree(0));   // false
+        System.out.println(sol.isPowerOfThree(-1));  // false
+        System.out.println(sol.isPowerOfThree(1));   // true (3^0)
+        System.out.println(sol.isPowerOfThree(9));   // true
+    }
+}
 ```
 
 ---
